@@ -1,0 +1,74 @@
+# Redrob Hackathon — Submission Metadata
+# Mirror of the portal metadata. Fill in the team-identity fields before submitting.
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "TODO-your-team-name"
+
+primary_contact:
+  name: "TODO Full Name"
+  email: "TODO@example.com"
+  phone: "+91-XXXXXXXXXX"
+
+team_members:
+  - name: "TODO Member 1"
+    email: "TODO@example.com"
+    role: "ML Engineer"
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/TODO_USERNAME/TODO_REPO"
+sandbox_link: "https://colab.research.google.com/TODO_NOTEBOOK"
+reproduce_command: "python rank.py --candidates ./India_runs_data_and_ai_challenge/candidates.jsonl --out ./submission.csv"
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "MacBook (Apple Silicon)"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.13"
+  os: "macOS"
+  uses_gpu_for_inference: false        # Ranking is CPU-only
+  has_network_during_ranking: false    # Embeddings precomputed; reranker weights cached
+  pre_computation_required: true       # Dense embeddings generated offline
+  pre_computation_time_minutes: 8      # bge-base-en-v1.5 on a free Colab T4
+
+# ============================================================================
+# AI tools declaration  (transparency only — not penalized)
+# ============================================================================
+ai_tools_used:
+  - "Cursor"
+  - "Claude"
+
+ai_usage_summary: |
+  Used Cursor/Claude for code review, refactoring, and debugging during
+  development. No candidate data was sent to any hosted LLM at ranking time;
+  the only model usage is local/offline embedding pre-computation
+  (bge-base-en-v1.5) and a locally-run cross-encoder re-rank (bge-reranker-base).
+
+# ============================================================================
+# Approach summary
+# ============================================================================
+methodology_summary: |
+  Multi-stage funnel: hard filters + honeypot anomaly detection, dense
+  semantic similarity (bge-base-en-v1.5, precomputed offline, CPU dot-product
+  at rank time), parallel rule-based scoring (title/career, trust-weighted
+  skills, experience depth, education, location, career-pattern penalties), a
+  behavioral-signal multiplier (0.5-1.2x), and a cross-encoder re-rank of the
+  top-200 shortlist (bge-reranker-base) for top-of-funnel precision. Final
+  blend: 0.30 semantic + 0.50 rule + 0.20 behavioral, then cross-encoder
+  re-rank. Runs CPU-only with no network at rank time.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
