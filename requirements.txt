@@ -1,0 +1,11 @@
+numpy>=1.24.0
+scikit-learn>=1.3.0
+joblib>=1.3.0
+tqdm>=4.65.0
+pyyaml>=6.0
+# Used for offline embedding pre-computation (precompute_embeddings.py) and the
+# optional cross-encoder re-rank in rank.py. The dense-cosine ranking itself is
+# pure NumPy; torch/sentence-transformers are only needed when (re)generating
+# embeddings or running the cross-encoder.
+sentence-transformers>=2.7.0
+torch>=2.0.0

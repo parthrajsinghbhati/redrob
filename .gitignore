@@ -1,0 +1,24 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Large data artifacts (regenerate with precompute_embeddings.py)
+data/embeddings.npz
+data/jd_embedding.npy
+data/*.pkl
+
+# The 100K candidate pool (provided in the hackathon bundle)
+India_runs_data_and_ai_challenge/candidates.jsonl
+India_runs_data_and_ai_challenge/candidates.jsonl.gz
+
+# OS / editor
+.DS_Store
+*.swp
