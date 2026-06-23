@@ -1,101 +1,101 @@
 candidate_id,rank,score,reasoning
-CAND_0094759,1,0.9900,"Lead AI Engineer at Meta (8.6 yrs) — title aligns closely with the role; 8.6 years experience in the ideal range; core skills include scikit-learn, Learning to Rank, Semantic Search. Minor concern: low recruiter response rate (11%)."
-CAND_0011687,2,0.9212,"Senior NLP Engineer at Niramai (7.8 yrs) — title aligns closely with the role; 7.8 years experience in the ideal range; core skills include TensorFlow, OpenSearch, FAISS."
-CAND_0055905,3,0.8375,"Senior Machine Learning Engineer at Flipkart (8.1 yrs) — title aligns closely with the role; 8.1 years experience in the ideal range; core skills include Elasticsearch, Python, OpenSearch. Minor concern: located outside India (UK)."
-CAND_0046064,4,0.8084,"Senior NLP Engineer at Salesforce (8.9 yrs) — title aligns closely with the role; 8.9 years experience in the ideal range; core skills include Python, Pinecone, BM25."
-CAND_0007411,5,0.7980,"Senior Machine Learning Engineer at Amazon (8.0 yrs) — title aligns closely with the role; 8.0 years experience in the ideal range; core skills include OpenSearch, Vector Search, BM25. Minor concern: low recruiter response rate (12%)."
-CAND_0004402,6,0.6590,"AI Research Engineer at Yellow.ai (6.0 yrs) — title aligns closely with the role; 6.0 years experience in the ideal range; core skills include OpenSearch, PyTorch, Learning to Rank."
-CAND_0043637,7,0.6491,"Junior ML Engineer at Rephrase.ai (5.5 yrs) — title aligns closely with the role; 5.5 years experience in the ideal range; core skills include PyTorch, Milvus, Learning to Rank."
-CAND_0043676,8,0.5852,"Senior Software Engineer (ML) at Observe.AI (6.1 yrs) — title aligns closely with the role; 6.1 years experience in the ideal range; core skills include scikit-learn, Semantic Search, TensorFlow."
-CAND_0043125,9,0.5710,"Senior Software Engineer (ML) at Rephrase.ai (5.3 yrs) — title aligns closely with the role; 5.3 years experience in the ideal range; core skills include Sentence Transformers, Information Retrieval, Learning to Rank."
-CAND_0061257,10,0.5511,"Staff Machine Learning Engineer at LinkedIn (8.0 yrs) — title aligns closely with the role; 8.0 years experience in the ideal range; relevant skills: Machine Learning, Python."
-CAND_0073139,11,0.5467,"ML Engineer at Rephrase.ai (4.6 yrs) — title aligns closely with the role; 4.6 years experience (slightly below preferred range); core skills include Milvus, OpenSearch, TensorFlow. Minor concern: long notice period (120 days)."
-CAND_0098952,12,0.5404,"AI Research Engineer at CRED (5.5 yrs) — title aligns closely with the role; 5.5 years experience in the ideal range; core skills include Recommendation Systems, OpenSearch, scikit-learn."
-CAND_0008202,13,0.5315,"Senior Software Engineer (ML) at Yellow.ai (5.7 yrs) — title aligns closely with the role; 5.7 years experience in the ideal range; core skills include FAISS, Python, PyTorch."
-CAND_0067041,14,0.5203,"Data Scientist at Saarthi.ai (6.9 yrs) — title aligns closely with the role; 6.9 years experience in the ideal range; core skills include Milvus, Learning to Rank, Elasticsearch. Minor concern: long notice period (120 days)."
-CAND_0019288,15,0.5047,"AI Research Engineer at Paytm (5.7 yrs) — title aligns closely with the role; 5.7 years experience in the ideal range; core skills include FAISS, TensorFlow, OpenSearch."
-CAND_0048558,16,0.5015,"Strong fit: title aligns closely with the role; 6.7 years experience in the ideal range; core skills include Information Retrieval, OpenSearch, Qdrant."
-CAND_0028422,17,0.4474,"Strong fit: title aligns closely with the role; 5.5 years experience in the ideal range; core skills include Pinecone, Deep Learning, OpenSearch."
-CAND_0049540,18,0.4377,"Strong fit: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include TensorFlow, Deep Learning, Sentence Transformers."
-CAND_0060054,19,0.4311,"Strong fit: title aligns closely with the role; 6.4 years experience in the ideal range; core skills include TensorFlow, Weaviate, FAISS."
-CAND_0015581,20,0.4205,"Strong fit: title aligns closely with the role; 6.0 years experience in the ideal range; core skills include Python, BM25, PyTorch."
-CAND_0034169,21,0.4157,"Strong fit: title aligns closely with the role; 3.4 years experience (slightly below preferred range); core skills include Python, NLP, OpenSearch."
-CAND_0069718,22,0.4120,"Strong fit: title aligns closely with the role; 5.7 years experience in the ideal range; relevant skills: OpenSearch, Elasticsearch."
-CAND_0036484,23,0.4117,"Strong fit: title aligns closely with the role; 5.7 years experience in the ideal range; core skills include Qdrant, Machine Learning, Recommendation Systems."
-CAND_0048166,24,0.4092,"Strong fit: title aligns closely with the role; 5.2 years experience in the ideal range; core skills include Pinecone, Milvus, Recommendation Systems. Gap: located outside India (Germany)."
-CAND_0004131,25,0.3921,"Strong fit: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include Information Retrieval, PyTorch, Deep Learning. Gap: long notice period (120 days)."
-CAND_0069232,26,0.3905,"Strong fit: title aligns closely with the role; 6.3 years experience in the ideal range; core skills include Pinecone, NLP, Python. Gap: long notice period (120 days)."
-CAND_0049978,27,0.3867,"Strong fit: title aligns closely with the role; 6.6 years experience in the ideal range; core skills include Deep Learning, Weaviate, BM25."
-CAND_0005269,28,0.3814,"Strong fit: title aligns closely with the role; 6.1 years experience in the ideal range; core skills include Information Retrieval, Machine Learning, Elasticsearch."
-CAND_0066035,29,0.3726,"Strong fit: title aligns closely with the role; 6.7 years experience in the ideal range; core skills include Information Retrieval, NLP, BM25."
-CAND_0010541,30,0.3582,"Strong fit: title aligns closely with the role; 6.2 years experience in the ideal range; core skills include Pinecone, Weaviate, Python."
-CAND_0033987,31,0.3563,"ML Engineer with 6.8 years — title aligns closely with the role; 6.8 years experience in the ideal range; core skills include Recommendation Systems, Deep Learning, FAISS."
-CAND_0003791,32,0.3516,"ML Engineer with 6.6 years: title aligns closely with the role. However, located outside India (USA)."
-CAND_0036973,33,0.3447,"AI Research Engineer with 6.2 years: title aligns closely with the role. However, long notice period (120 days)."
-CAND_0005649,34,0.3427,"Senior Data Scientist with 7.4 years — title aligns closely with the role; 7.4 years experience in the ideal range; core skills include Deep Learning, TensorFlow, Recommendation Systems."
-CAND_0022023,35,0.3426,"AI Research Engineer with 4.6 years — title aligns closely with the role; 4.6 years experience (slightly below preferred range); core skills include Machine Learning, Semantic Search, Elasticsearch."
-CAND_0026942,36,0.3410,"Junior ML Engineer with 6.0 years — title aligns closely with the role; 6.0 years experience in the ideal range; core skills include Learning to Rank, TensorFlow, Information Retrieval."
-CAND_0053591,37,0.3399,"AI Engineer with 5.3 years: title aligns closely with the role. However, located outside India (Canada)."
-CAND_0081852,38,0.3321,"Senior Data Scientist with 5.9 years — title aligns closely with the role; 5.9 years experience in the ideal range; core skills include Semantic Search, Milvus, Weaviate."
-CAND_0035315,39,0.3317,"Data Scientist with 4.9 years: title aligns closely with the role. However, long notice period (120 days); located outside India (USA)."
-CAND_0060835,40,0.3298,"Senior Software Engineer (ML) with 6.6 years — title aligns closely with the role; 6.6 years experience in the ideal range; core skills include PyTorch, FAISS, Weaviate."
-CAND_0040946,41,0.3237,"AI Research Engineer with 6.0 years — title aligns closely with the role; 6.0 years experience in the ideal range; core skills include Qdrant, Deep Learning, NLP."
-CAND_0024147,42,0.3227,"ML Engineer with 5.9 years — title aligns closely with the role; 5.9 years experience in the ideal range; core skills include Qdrant, Recommendation Systems, OpenSearch."
-CAND_0076412,43,0.3165,"AI Research Engineer with 5.8 years: title aligns closely with the role. However, long notice period (120 days)."
-CAND_0033842,44,0.3153,"Senior Software Engineer (ML) with 5.8 years — title aligns closely with the role; 5.8 years experience in the ideal range; core skills include OpenSearch, NLP, Qdrant."
-CAND_0067866,45,0.3085,"Senior Software Engineer (ML) with 6.4 years — title aligns closely with the role; 6.4 years experience in the ideal range; core skills include Embeddings, Elasticsearch, Qdrant."
-CAND_0061175,46,0.2961,"AI Research Engineer with 6.7 years: title aligns closely with the role. However, long notice period (120 days)."
-CAND_0046353,47,0.2928,"ML Engineer with 6.4 years: title aligns closely with the role. However, long notice period (120 days)."
-CAND_0066713,48,0.2901,"Senior Software Engineer (ML) with 5.7 years: title aligns closely with the role. However, long notice period (120 days)."
-CAND_0025882,49,0.2888,"Senior Software Engineer (ML) with 5.6 years — title aligns closely with the role; 5.6 years experience in the ideal range; core skills include scikit-learn, FAISS, Vector Search."
-CAND_0018888,50,0.2873,"AI Research Engineer with 6.5 years — title aligns closely with the role; 6.5 years experience in the ideal range; relevant skills: Information Retrieval, FAISS."
-CAND_0086154,51,0.2755,"Moderate match as Data Scientist at Ola: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include OpenSearch, scikit-learn, Machine Learning."
-CAND_0064326,52,0.2726,"Moderate match as Search Engineer at Sarvam AI: title aligns closely with the role; 7.6 years experience in the ideal range; core skills include scikit-learn, PyTorch, Milvus."
-CAND_0007052,53,0.2717,"Moderate match as ML Engineer at Unacademy: title aligns closely with the role; 6.5 years experience in the ideal range; core skills include Deep Learning, Weaviate, Milvus."
-CAND_0059017,54,0.2665,"Moderate match as AI Research Engineer at PhonePe: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include Sentence Transformers, FAISS, Machine Learning."
-CAND_0098780,55,0.2575,"Moderate match as AI Research Engineer at Zomato: title aligns closely with the role; 5.9 years experience in the ideal range; core skills include Semantic Search, Sentence Transformers, Milvus."
-CAND_0074731,56,0.2363,"Moderate match as Data Scientist at InMobi: title aligns closely with the role; 6.6 years experience in the ideal range; core skills include Weaviate, PyTorch, TensorFlow."
-CAND_0033179,57,0.2257,"Moderate match as AI Research Engineer at Wipro: title aligns closely with the role; 6.9 years experience in the ideal range; core skills include OpenSearch, PyTorch, scikit-learn."
-CAND_0077498,58,0.2228,"Moderate match as Senior Software Engineer (ML) at Niramai: title aligns closely with the role; 5.4 years experience in the ideal range; core skills include Embeddings, Elasticsearch, Sentence Transformers."
-CAND_0078785,59,0.2191,"Partial fit: long notice period (120 days). On the positive side, title aligns closely with the role."
-CAND_0051466,60,0.2171,"Moderate match as AI Research Engineer at Niramai: title aligns closely with the role; 5.3 years experience in the ideal range; core skills include Information Retrieval, Milvus, PyTorch."
-CAND_0096655,61,0.2129,"Moderate match as Junior ML Engineer at Genpact AI: title aligns closely with the role; 5.9 years experience in the ideal range; relevant skills: Python, PyTorch."
-CAND_0067403,62,0.2086,"Moderate match as Junior ML Engineer at Unacademy: title aligns closely with the role; 4.6 years experience (slightly below preferred range); relevant skills: Qdrant, Sentence Transformers."
-CAND_0099401,63,0.2069,"Moderate match as NLP Engineer at Dream11: title aligns closely with the role; 7.7 years experience in the ideal range; core skills include BM25, Embeddings, Deep Learning."
-CAND_0030946,64,0.2056,"Moderate match as Junior ML Engineer at Yellow.ai: title aligns closely with the role; 6.7 years experience in the ideal range; core skills include BM25, Learning to Rank, Machine Learning."
-CAND_0076482,65,0.2030,"Partial fit: located outside India (USA). On the positive side, title aligns closely with the role."
-CAND_0065878,66,0.2021,"Moderate match as Senior Data Scientist at Niramai: title aligns closely with the role; 7.8 years experience in the ideal range; core skills include scikit-learn, TensorFlow, Vector Search."
-CAND_0049896,67,0.2020,"Moderate match as Search Engineer at Unacademy: title aligns closely with the role; 7.3 years experience in the ideal range; core skills include Sentence Transformers, PyTorch, Information Retrieval."
-CAND_0083879,68,0.1983,"Moderate match as Machine Learning Engineer at Ola: title aligns closely with the role; 7.1 years experience in the ideal range; core skills include Milvus, scikit-learn, Machine Learning."
-CAND_0043860,69,0.1981,"Moderate match as Junior ML Engineer at Aganitha: title aligns closely with the role; 6.1 years experience in the ideal range; core skills include Semantic Search, Information Retrieval, Deep Learning."
-CAND_0004555,70,0.1920,"Moderate match as Senior Software Engineer (ML) at Dream11: title aligns closely with the role; 5.0 years experience in the ideal range; relevant skills: TensorFlow, PyTorch."
-CAND_0027801,71,0.1886,NLP Engineer (7.4 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0090584,72,0.1885,ML Engineer (5.1 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0082086,73,0.1879,Senior Software Engineer (ML) (6.0 yrs): title aligns closely with the role; no major red flags.
-CAND_0008295,74,0.1801,AI Research Engineer (6.5 yrs): title aligns closely with the role; no major red flags.
-CAND_0070225,75,0.1799,ML Engineer (6.0 yrs): title aligns closely with the role; no major red flags.
-CAND_0087006,76,0.1796,Senior Software Engineer (ML) (5.7 yrs): title aligns closely with the role; no major red flags.
-CAND_0028793,77,0.1786,Search Engineer (7.2 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0089947,78,0.1761,Junior ML Engineer (5.4 yrs): title aligns closely with the role; no major red flags.
-CAND_0016657,79,0.1698,AI Research Engineer (5.3 yrs): title aligns closely with the role; no major red flags.
-CAND_0099269,80,0.1631,Data Scientist (5.5 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0070525,81,0.1578,Senior Software Engineer (ML) (5.4 yrs): title aligns closely with the role; no major red flags.
-CAND_0057563,82,0.1575,NLP Engineer (6.8 yrs): title aligns closely with the role; no major red flags.
-CAND_0095213,83,0.1570,ML Engineer (5.1 yrs): title aligns closely with the role; no major red flags.
-CAND_0070485,84,0.1393,Search Engineer (6.4 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0031593,85,0.1354,Search Engineer (7.8 yrs): title aligns closely with the role; no major red flags.
-CAND_0025109,86,0.1322,Data Scientist (4.5 yrs): title aligns closely with the role; no major red flags.
-CAND_0030953,87,0.1312,Search Engineer (7.8 yrs): title aligns closely with the role; no major red flags.
-CAND_0061265,88,0.1305,Recommendation Systems Engineer (6.6 yrs): relevant technical background as Recommendation Systems Engineer; long notice period (120 days).
-CAND_0076251,89,0.1275,Search Engineer (7.6 yrs): title aligns closely with the role; no major red flags.
-CAND_0007412,90,0.1273,Applied ML Engineer (7.4 yrs): title aligns closely with the role; long notice period (120 days).
-CAND_0011432,91,0.1234,Senior Data Scientist (7.6 yrs) included for title aligns closely with the role.
-CAND_0044091,92,0.1231,"ML Engineer (6.5 yrs) ranked for title aligns closely with the role, though long notice period (120 days)."
-CAND_0055139,93,0.1229,"ML Engineer (6.9 yrs) ranked for title aligns closely with the role, though long notice period (120 days)."
-CAND_0058146,94,0.1228,AI Research Engineer (5.1 yrs) included for title aligns closely with the role.
-CAND_0000273,95,0.1143,ML Engineer (5.8 yrs) included for title aligns closely with the role.
-CAND_0091899,96,0.1133,Senior Software Engineer (ML) (5.8 yrs) included for title aligns closely with the role.
-CAND_0015528,97,0.1121,Applied ML Engineer (7.4 yrs) included for title aligns closely with the role.
-CAND_0074123,98,0.1088,Data Scientist (6.9 yrs) included for title aligns closely with the role.
-CAND_0060315,99,0.1007,Senior Software Engineer (ML) (5.4 yrs) included for title aligns closely with the role.
-CAND_0026362,100,0.1000,Data Scientist (5.0 yrs) included for title aligns closely with the role.
+CAND_0018499,1,0.9900,"Senior Machine Learning Engineer at Zomato (7.2 yrs) — title aligns closely with the role; 7.2 years experience in the ideal range; core skills include Deep Learning, Weaviate, Recommendation Systems."
+CAND_0088025,2,0.9826,"Staff Machine Learning Engineer at Yellow.ai (8.6 yrs) — title aligns closely with the role; 8.6 years experience in the ideal range; core skills include Pinecone, TensorFlow, BM25."
+CAND_0046525,3,0.9448,"Senior Machine Learning Engineer at Genpact AI (6.1 yrs) — title aligns closely with the role; 6.1 years experience in the ideal range; core skills include Elasticsearch, Machine Learning, Information Retrieval."
+CAND_0002025,4,0.9293,"Senior AI Engineer at Apple (5.9 yrs) — title aligns closely with the role; 5.9 years experience in the ideal range; core skills include FAISS, TensorFlow, scikit-learn."
+CAND_0071974,5,0.9246,"Senior AI Engineer at Netflix (7.8 yrs) — title aligns closely with the role; 7.8 years experience in the ideal range; core skills include Learning to Rank, Weaviate, BM25."
+CAND_0077337,6,0.9027,"Staff Machine Learning Engineer at Paytm (7.0 yrs) — title aligns closely with the role; 7.0 years experience in the ideal range; core skills include Semantic Search, Pinecone, BM25."
+CAND_0094759,7,0.8603,"Lead AI Engineer at Meta (8.6 yrs) — title aligns closely with the role; 8.6 years experience in the ideal range; core skills include scikit-learn, Learning to Rank, Semantic Search. Minor concern: low recruiter response rate (11%)."
+CAND_0093547,8,0.8533,"Senior Machine Learning Engineer at PhonePe (2.9 yrs) — title aligns closely with the role; core skills include Python, Machine Learning, PyTorch; product-company experience at PhonePe."
+CAND_0081846,9,0.8108,"Lead AI Engineer at Razorpay (6.7 yrs) — title aligns closely with the role; 6.7 years experience in the ideal range; core skills include Information Retrieval, Learning to Rank, Elasticsearch."
+CAND_0011687,10,0.7908,"Senior NLP Engineer at Niramai (7.8 yrs) — title aligns closely with the role; 7.8 years experience in the ideal range; core skills include TensorFlow, OpenSearch, FAISS."
+CAND_0086022,11,0.7833,"Senior Applied Scientist at Sarvam AI (5.3 yrs) — title aligns closely with the role; 5.3 years experience in the ideal range; core skills include Vector Search, Recommendation Systems, Deep Learning."
+CAND_0006567,12,0.7772,"Senior AI Engineer at Meta (7.9 yrs) — title aligns closely with the role; 7.9 years experience in the ideal range; core skills include scikit-learn, BM25, NLP."
+CAND_0041611,13,0.7579,"Staff Machine Learning Engineer at Locobuzz (6.4 yrs) — title aligns closely with the role; 6.4 years experience in the ideal range; core skills include PyTorch, Qdrant, NLP. Minor concern: low recruiter response rate (7%); located outside India (USA)."
+CAND_0008425,14,0.7559,"Senior NLP Engineer at Ola (7.8 yrs) — title aligns closely with the role; 7.8 years experience in the ideal range; core skills include Learning to Rank, Qdrant, Sentence Transformers."
+CAND_0055905,15,0.7148,"Senior Machine Learning Engineer at Flipkart (8.1 yrs) — title aligns closely with the role; 8.1 years experience in the ideal range; core skills include Elasticsearch, Python, OpenSearch. Minor concern: located outside India (UK)."
+CAND_0060072,16,0.7102,"Strong fit: title aligns closely with the role; 5.7 years experience in the ideal range; core skills include Deep Learning, Sentence Transformers, PyTorch. Gap: low recruiter response rate (10%)."
+CAND_0046064,17,0.6821,"Strong fit: title aligns closely with the role; 8.9 years experience in the ideal range; core skills include Python, Pinecone, BM25."
+CAND_0005260,18,0.6775,"Strong fit: title aligns closely with the role; 5.2 years experience in the ideal range; core skills include Information Retrieval, Semantic Search, Deep Learning."
+CAND_0007411,19,0.6768,"Strong fit: title aligns closely with the role; 8.0 years experience in the ideal range; core skills include OpenSearch, Vector Search, BM25. Gap: low recruiter response rate (12%)."
+CAND_0050454,20,0.6611,"Strong fit: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include PyTorch, FAISS, Qdrant."
+CAND_0068351,21,0.6464,"Strong fit: title aligns closely with the role; 6.4 years experience in the ideal range; core skills include Deep Learning, Qdrant, Elasticsearch."
+CAND_0005538,22,0.6397,"Strong fit: title aligns closely with the role; 5.9 years experience in the ideal range; core skills include Deep Learning, Python, PyTorch."
+CAND_0033861,23,0.6247,"Strong fit: title aligns closely with the role; 8.0 years experience in the ideal range; core skills include Weaviate, Machine Learning, TensorFlow. Gap: low recruiter response rate (16%)."
+CAND_0092278,24,0.5613,"Strong fit: title aligns closely with the role; 6.8 years experience in the ideal range; core skills include TensorFlow, Machine Learning, NLP. Gap: low recruiter response rate (7%)."
+CAND_0064904,25,0.5491,"Strong fit: title aligns closely with the role; 4.9 years experience (slightly below preferred range); core skills include Embeddings, Elasticsearch, Python."
+CAND_0004402,26,0.5485,"Strong fit: title aligns closely with the role; 6.0 years experience in the ideal range; core skills include OpenSearch, PyTorch, Learning to Rank."
+CAND_0043637,27,0.5401,"Strong fit: title aligns closely with the role; 5.5 years experience in the ideal range; core skills include PyTorch, Milvus, Learning to Rank."
+CAND_0093193,28,0.5076,"Strong fit: title aligns closely with the role; 7.9 years experience in the ideal range; core skills include Ranking Systems, Qdrant, OpenSearch."
+CAND_0080766,29,0.4823,"Strong fit: title aligns closely with the role; 8.8 years experience in the ideal range; core skills include Elasticsearch, Deep Learning, Natural Language Processing."
+CAND_0058688,30,0.4468,"Strong fit: title aligns closely with the role; 6.7 years experience in the ideal range; core skills include scikit-learn, Embeddings, TensorFlow. Gap: located outside India (Germany)."
+CAND_0061257,31,0.4425,"Staff Machine Learning Engineer with 8.0 years — title aligns closely with the role; 8.0 years experience in the ideal range; relevant skills: Machine Learning, Python."
+CAND_0098952,32,0.4342,"AI Research Engineer with 5.5 years — title aligns closely with the role; 5.5 years experience in the ideal range; core skills include Recommendation Systems, OpenSearch, scikit-learn."
+CAND_0009837,33,0.4324,"Senior Data Scientist with 4.3 years — title aligns closely with the role; 4.3 years experience (slightly below preferred range); core skills include scikit-learn, TensorFlow, PyTorch."
+CAND_0067041,34,0.4150,"Data Scientist with 6.9 years: title aligns closely with the role. However, long notice period (120 days)."
+CAND_0037980,35,0.4120,"Senior Applied Scientist with 9.0 years — title aligns closely with the role; 9.0 years experience in the ideal range; core skills include PyTorch, NLP, BM25."
+CAND_0019288,36,0.3989,"AI Research Engineer with 5.7 years — title aligns closely with the role; 5.7 years experience in the ideal range; core skills include FAISS, TensorFlow, OpenSearch."
+CAND_0087630,37,0.3927,"AI Engineer with 7.2 years — title aligns closely with the role; 7.2 years experience in the ideal range; core skills include Elasticsearch, NLP, Learning to Rank."
+CAND_0098846,38,0.3890,"AI Engineer with 7.6 years — title aligns closely with the role; 7.6 years experience in the ideal range; core skills include Machine Learning, Qdrant, TensorFlow."
+CAND_0044222,39,0.3709,"AI Engineer with 7.7 years — title aligns closely with the role; 7.7 years experience in the ideal range; core skills include Vector Search, OpenSearch, Qdrant."
+CAND_0079387,40,0.3627,"AI Engineer with 6.9 years — title aligns closely with the role; 6.9 years experience in the ideal range; core skills include scikit-learn, Recommendation Systems, Python."
+CAND_0020350,41,0.3549,"AI Engineer with 5.8 years — title aligns closely with the role; 5.8 years experience in the ideal range; core skills include NLP, FAISS, BM25."
+CAND_0030031,42,0.3504,"AI Engineer with 5.7 years — title aligns closely with the role; 5.7 years experience in the ideal range; core skills include Information Retrieval, PyTorch, Python."
+CAND_0028422,43,0.3450,"Junior ML Engineer with 5.5 years — title aligns closely with the role; 5.5 years experience in the ideal range; core skills include Pinecone, Deep Learning, OpenSearch."
+CAND_0029367,44,0.3420,"Senior Data Scientist with 5.7 years — title aligns closely with the role; 5.7 years experience in the ideal range; core skills include TensorFlow, FAISS, Sentence Transformers."
+CAND_0050876,45,0.3395,"Applied ML Engineer with 6.0 years — title aligns closely with the role; 6.0 years experience in the ideal range; core skills include Qdrant, FAISS, scikit-learn."
+CAND_0049540,46,0.3347,"ML Engineer with 6.8 years — title aligns closely with the role; 6.8 years experience in the ideal range; core skills include TensorFlow, Deep Learning, Sentence Transformers."
+CAND_0062247,47,0.3248,"AI Engineer with 7.3 years — title aligns closely with the role; 7.3 years experience in the ideal range; core skills include Pinecone, Vector Search, Qdrant."
+CAND_0099806,48,0.3241,"AI Engineer with 4.6 years — title aligns closely with the role; 4.6 years experience (slightly below preferred range); core skills include FAISS, Embeddings, Sentence Transformers."
+CAND_0060054,49,0.3184,"AI Engineer with 6.4 years — title aligns closely with the role; 6.4 years experience in the ideal range; core skills include TensorFlow, Weaviate, FAISS."
+CAND_0015578,50,0.3170,"AI Engineer with 5.4 years — title aligns closely with the role; 5.4 years experience in the ideal range; core skills include Embeddings, NLP, BM25."
+CAND_0024620,51,0.3161,"Partial fit: located outside India (USA). On the positive side, title aligns closely with the role."
+CAND_0069718,52,0.3106,"Moderate match as ML Engineer at Saarthi.ai: title aligns closely with the role; 5.7 years experience in the ideal range; relevant skills: OpenSearch, Elasticsearch."
+CAND_0030468,53,0.3105,"Moderate match as Senior Applied Scientist at Swiggy: title aligns closely with the role; 5.4 years experience in the ideal range; core skills include TensorFlow, Machine Learning, Ranking Systems."
+CAND_0048166,54,0.3066,"Partial fit: located outside India (Germany). On the positive side, title aligns closely with the role."
+CAND_0036484,55,0.3065,"Moderate match as AI Research Engineer at InMobi: title aligns closely with the role; 5.7 years experience in the ideal range; core skills include Qdrant, Machine Learning, Recommendation Systems."
+CAND_0046132,56,0.2969,"Moderate match as AI Research Engineer at Verloop.io: title aligns closely with the role; 4.3 years experience (slightly below preferred range); relevant skills: Information Retrieval, PyTorch."
+CAND_0005269,57,0.2796,"Moderate match as Senior Software Engineer (ML) at Sarvam AI: title aligns closely with the role; 6.1 years experience in the ideal range; core skills include Information Retrieval, Machine Learning, Elasticsearch."
+CAND_0044883,58,0.2687,"Partial fit: located outside India (Germany). On the positive side, title aligns closely with the role."
+CAND_0010541,59,0.2573,"Moderate match as AI Research Engineer at Wysa: title aligns closely with the role; 6.2 years experience in the ideal range; core skills include Pinecone, Weaviate, Python."
+CAND_0058575,60,0.2547,"Moderate match as AI Engineer at Krutrim: title aligns closely with the role; 5.8 years experience in the ideal range; core skills include Machine Learning, Recommendation Systems, Pinecone."
+CAND_0053591,61,0.2369,"Partial fit: located outside India (Canada). On the positive side, title aligns closely with the role."
+CAND_0042029,62,0.2358,"Moderate match as Senior Data Scientist at Flipkart: title aligns closely with the role; 6.5 years experience in the ideal range; core skills include PyTorch, NLP, Elasticsearch."
+CAND_0007460,63,0.2275,"Partial fit: long notice period (120 days). On the positive side, title aligns closely with the role."
+CAND_0068811,64,0.2273,"Moderate match as Applied ML Engineer at Freshworks: title aligns closely with the role; 8.0 years experience in the ideal range; core skills include Vector Search, Qdrant, scikit-learn."
+CAND_0005649,65,0.2270,"Moderate match as Senior Data Scientist at Sarvam AI: title aligns closely with the role; 7.4 years experience in the ideal range; core skills include Deep Learning, TensorFlow, Recommendation Systems."
+CAND_0081852,66,0.2230,"Moderate match as Senior Data Scientist at Mad Street Den: title aligns closely with the role; 5.9 years experience in the ideal range; core skills include Semantic Search, Milvus, Weaviate."
+CAND_0076904,67,0.2197,"Partial fit: located outside India (UK). On the positive side, title aligns closely with the role."
+CAND_0008239,68,0.2186,"Moderate match as AI Engineer at Apple: title aligns closely with the role; 4.0 years experience (slightly below preferred range); core skills include Milvus, Semantic Search, Elasticsearch."
+CAND_0061175,69,0.1957,"Partial fit: long notice period (120 days). On the positive side, title aligns closely with the role."
+CAND_0046353,70,0.1928,"Partial fit: long notice period (120 days). On the positive side, title aligns closely with the role."
+CAND_0042506,71,0.1761,Search Engineer (4.2 yrs): title aligns closely with the role; no major red flags.
+CAND_0049538,72,0.1731,Applied ML Engineer (5.8 yrs): title aligns closely with the role; no major red flags.
+CAND_0007052,73,0.1722,ML Engineer (6.5 yrs): title aligns closely with the role; no major red flags.
+CAND_0047721,74,0.1660,Senior Data Scientist (7.0 yrs): title aligns closely with the role; no major red flags.
+CAND_0070202,75,0.1645,Machine Learning Engineer (5.1 yrs): title aligns closely with the role; no major red flags.
+CAND_0070398,76,0.1627,Machine Learning Engineer (7.2 yrs): title aligns closely with the role; long notice period (120 days).
+CAND_0027691,77,0.1622,NLP Engineer (6.5 yrs): title aligns closely with the role; no major red flags.
+CAND_0064326,78,0.1614,Search Engineer (7.6 yrs): title aligns closely with the role; no major red flags.
+CAND_0081053,79,0.1590,NLP Engineer (5.4 yrs): title aligns closely with the role; no major red flags.
+CAND_0091909,80,0.1589,Machine Learning Engineer (6.9 yrs): title aligns closely with the role; no major red flags.
+CAND_0098780,81,0.1582,AI Research Engineer (5.9 yrs): title aligns closely with the role; no major red flags.
+CAND_0083307,82,0.1466,Search Engineer (7.8 yrs): title aligns closely with the role; long notice period (120 days).
+CAND_0075574,83,0.1421,Machine Learning Engineer (5.7 yrs): title aligns closely with the role; no major red flags.
+CAND_0094056,84,0.1385,NLP Engineer (5.9 yrs): title aligns closely with the role; long notice period (120 days).
+CAND_0074735,85,0.1350,Applied ML Engineer (5.5 yrs): title aligns closely with the role; no major red flags.
+CAND_0044855,86,0.1333,Senior Data Scientist (6.6 yrs): title aligns closely with the role; no major red flags.
+CAND_0010257,87,0.1328,Senior Data Scientist (6.5 yrs): title aligns closely with the role; long notice period (120 days).
+CAND_0037944,88,0.1315,Senior Data Scientist (4.9 yrs): title aligns closely with the role; no major red flags.
+CAND_0041568,89,0.1287,Search Engineer (5.2 yrs): title aligns closely with the role; located outside India (Australia).
+CAND_0033179,90,0.1273,AI Research Engineer (6.9 yrs): title aligns closely with the role; no major red flags.
+CAND_0036437,91,0.1262,Search Engineer (4.8 yrs) included for title aligns closely with the role.
+CAND_0040887,92,0.1254,"Machine Learning Engineer (4.7 yrs) ranked for title aligns closely with the role, though located outside India (Canada)."
+CAND_0009691,93,0.1237,"Applied ML Engineer (6.2 yrs) ranked for title aligns closely with the role, though long notice period (120 days)."
+CAND_0051466,94,0.1197,AI Research Engineer (5.3 yrs) included for title aligns closely with the role.
+CAND_0045250,95,0.1175,Applied ML Engineer (6.6 yrs) included for title aligns closely with the role.
+CAND_0061339,96,0.1107,Search Engineer (4.2 yrs) included for title aligns closely with the role.
+CAND_0095528,97,0.1081,Senior Data Scientist (5.3 yrs) included for title aligns closely with the role.
+CAND_0006418,98,0.1075,Machine Learning Engineer (5.7 yrs) included for title aligns closely with the role.
+CAND_0009024,99,0.1021,Search Engineer (5.2 yrs) included for title aligns closely with the role.
+CAND_0051004,100,0.1000,Senior Data Scientist (4.7 yrs) included for title aligns closely with the role.

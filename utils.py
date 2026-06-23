@@ -6,10 +6,10 @@ Streaming JSONL reader, safe field accessors, date parsing.
 
 import json
 import math
-from datetime import datetime, date
+from datetime import datetime
 from typing import Any, Generator
 
-from config import DEFAULTS
+from config import DEFAULTS, DATASET_REFERENCE_DATE
 
 
 # ============================================================================
@@ -75,8 +75,9 @@ def safe_get_signal(candidate: dict, signal_name: str):
 # Date Utilities
 # ============================================================================
 
-_TODAY = date.today()
-REFERENCE_DATE = datetime(_TODAY.year, _TODAY.month, _TODAY.day)
+# Pinned reference "now" (see config.DATASET_REFERENCE_DATE) — keeps date-based
+# checks reproducible regardless of when the pipeline runs.
+REFERENCE_DATE = datetime.strptime(DATASET_REFERENCE_DATE, "%Y-%m-%d")
 
 
 def parse_date(date_str: str | None) -> datetime | None:

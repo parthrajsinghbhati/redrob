@@ -34,12 +34,27 @@ BEHAVIORAL_SIGNAL_WEIGHTS = {
 }
 
 # ============================================================================
+# Reference Date  (pinned for reproducibility — must not drift with wall-clock)
+# ============================================================================
+# The dataset's signals max out around 2026-05-27; pin "now" to that so honeypot
+# date checks and behavioral recency are deterministic across machines/dates.
+DATASET_REFERENCE_DATE = "2026-05-27"
+
+# ============================================================================
 # Experience Thresholds
 # ============================================================================
 MIN_EXPERIENCE_YEARS = 2.0   # Hard filter — below this, eliminate
 MAX_EXPERIENCE_YEARS = 20.0  # Above this + no ML titles → eliminate
 IDEAL_EXPERIENCE_MIN = 5.0
 IDEAL_EXPERIENCE_MAX = 9.0
+
+# ============================================================================
+# Honeypot Detection Thresholds  (high-precision concrete-anomaly checks)
+# ============================================================================
+EXP_SPAN_TOLERANCE_YEARS = 3.0     # yoe may exceed listed career span by this much
+EXPERT_ZERO_DURATION_MIN = 2       # >= N "expert" skills with 0 months used → impossible
+ROLE_TENURE_SLACK_MONTHS = 12      # a single role longer than yoe*12 + this → impossible
+FUTURE_DATE_GRACE_DAYS = 30        # dates beyond REFERENCE_DATE + this are impossible
 
 # ============================================================================
 # Embedding Model  (dense retrieval — precomputed offline, loaded on CPU)
