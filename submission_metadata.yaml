@@ -4,23 +4,35 @@
 # ============================================================================
 # Team identity
 # ============================================================================
-team_name: "TODO-your-team-name"
+team_name: ".venv"
 
 primary_contact:
-  name: "TODO Full Name"
-  email: "TODO@example.com"
-  phone: "+91-XXXXXXXXXX"
+  name: "Rudraksh Sharma"
+  email: "sharmarudraksh1001@gmail.com"
+  phone: "+91-7404048120"
 
 team_members:
-  - name: "TODO Member 1"
-    email: "TODO@example.com"
-    role: "ML Engineer"
+  - name: "Rudraksh Sharma"
+    email: "sharmarudraksh1001@gmail.com"
+    role: "Team Lead"
+
+  - name: "Parthraj Singh Bhati"
+    email: "parthrajsinghbhati@gmail.com"
+    role: "ML Engineer (repo owner, ranking pipeline)"
+
+  - name: "Himanshu Pandey"
+    email: "himanshu.premote@gmail.com"
+    role: "Data Engineer (embeddings, preprocessing)"
+
+  - name: "Aradhya Tiwari"
+    email: "aradhyafcb@gmail.com"
+    role: "ML Engineer (scoring, evaluation)"
 
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: "https://github.com/TODO_USERNAME/TODO_REPO"
-sandbox_link: "https://colab.research.google.com/TODO_NOTEBOOK"
+github_repo: "https://github.com/parthrajsinghbhati/redrob"
+sandbox_link: "https://colab.research.google.com/github/parthrajsinghbhati/redrob/blob/main/sandbox.ipynb"
 reproduce_command: "python rank.py --candidates ./India_runs_data_and_ai_challenge/candidates.jsonl --out ./submission.csv"
 
 # ============================================================================
