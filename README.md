@@ -23,9 +23,9 @@ An AI-powered candidate ranking system that goes beyond keyword matching to unde
 
 2. **Cross-encoder re-ranking of a shortlist.** A bi-encoder is fast but coarse; a cross-encoder (`BAAI/bge-reranker-base`) is precise but expensive. We get both by re-ranking only the top-200 shortlist — precision where it matters (NDCG@10) while staying inside the CPU/5-min budget. It degrades gracefully (dense+rule order) if the weights aren't available locally.
 
-3. **Anti-keyword-stuffing.** Skills are scored with a *trust multiplier* based on proficiency, endorsements, duration, and assessment scores — not just presence/absence.
+3. **Anti-keyword-stuffing, evidence-gated.** Skills are scored with a *trust multiplier* (proficiency, endorsements, duration, assessment scores — not just presence). On top of that, a title-agnostic stuffer check separates *claims* from *evidence*: a profile that advertises AI (a packed skills list or a buzzword headline like "AI enthusiast | Building with LLMs") but shows no genuine ML work in its actual job titles or role descriptions is penalised. Crucially, the self-written summary counts as a claim, not evidence — so domain pivots (PMs, marketers, analysts) who buzzword-stuff are caught, while real practitioners (whose titles/role descriptions always carry ML signal) are never touched. ML/AI experience credit likewise requires real ML terms, so generic words like "production" or "pipeline" don't leak credit from manufacturing/ops roles.
 
-4. **Career trajectory analysis.** Detects consulting-only careers, title-description mismatches, and job-hopping patterns. Product-company experience is weighted heavily.
+4. **Career trajectory analysis.** Detects consulting-only careers, claim-vs-evidence mismatches, and job-hopping patterns. Genuine product/ML role experience is weighted heavily — including partial credit for real ML work done at consulting firms.
 
 5. **Honeypot detection.** Flags only profiles with verifiable, concrete impossibilities (experience exceeding the career span, a role longer than the whole career, "expert" skills with zero usage, future dates) — high precision, so it never discards genuinely excellent candidates. Keyword-stuffer traps are handled separately as score penalties.
 

@@ -35,7 +35,6 @@ from config import (
     EDUCATION_MAX_PTS,
     LOCATION_MAX_PTS,
     CAREER_PATTERN_PENALTY_MAX,
-    NON_TECH_TITLES,
 )
 from utils import safe_get, clamp, log_scale
 
@@ -87,12 +86,9 @@ def _score_title_career(candidate: dict) -> float:
 
     # --- Product / ML-role experience (0-10 pts) ---
     # Role-based, not just employer-based: genuine ML/AI production work at a
-    # consulting firm still earns partial credit (Issue 5).
-    ml_role_signals = {
-        "machine learning", "deep learning", "nlp", "embedding",
-        "model", "ranking", "retrieval", "recommendation", "pytorch",
-        "tensorflow", "pipeline", "deployed", "production",
-    }
+    # consulting firm still earns partial credit (Issue 5).  Credit requires a
+    # *real* ML signal — generic words like "production"/"pipeline" alone (which
+    # also match manufacturing/ops descriptions) no longer qualify.
     has_product_exp = False
     product_months = 0.0
     for role in career:
@@ -102,7 +98,10 @@ def _score_title_career(candidate: dict) -> float:
         duration = role.get("duration_months", 0) or 0
 
         is_consulting = company in CONSULTING_FIRMS
-        role_is_ml = any(kw in desc or kw in title for kw in ml_role_signals)
+        role_is_ml = (
+            any(t in title for t in _ML_TITLE_FRAGMENTS)
+            or any(term in desc for term in _REAL_ML_TERMS)
+        )
 
         if not is_consulting:
             has_product_exp = True
@@ -453,37 +452,80 @@ def _is_consulting_only(career: list) -> bool:
     )
 
 
-def _is_keyword_stuffer(profile: dict, career: list, skills: list) -> bool:
+# Multi-word ML/AI terms that indicate *genuine* hands-on work. Kept multi-word
+# where possible so generic words ("model", "production", "pipeline") don't
+# false-match manufacturing/finance/ops descriptions.
+_REAL_ML_TERMS = {
+    "machine learning", "deep learning", "neural network", "nlp",
+    "natural language", "computer vision", "embedding", "embeddings",
+    "model training", "trained model", "model deployment", "recommendation",
+    "recommender", "information retrieval", "semantic search", "vector search",
+    "vector database", "learning to rank", "learning-to-rank", "ranking model",
+    "pytorch", "tensorflow", "scikit-learn", "xgboost", "hugging face",
+    "transformer", "llm", "large language model", "fine-tune", "fine-tuning",
+    "fine-tuned", "rag", "faiss", "mlops", "feature engineering",
+}
+
+# Title fragments that by themselves prove ML/AI relevance.
+_ML_TITLE_FRAGMENTS = (
+    "machine learning", "ml engineer", "ai engineer", " ai ", "nlp",
+    "data scien", "applied scien", "research scien", "research engineer",
+    "ml scientist", "mlops", "ml ops",
+)
+
+
+def _has_real_ml_evidence(profile: dict, career: list) -> bool:
     """
-    Detect profiles where the title is clearly non-technical but the skills
-    list is packed with AI/ML keywords — the exact trap the JD warns about.
+    True if the candidate demonstrates genuine ML/AI work in places that are
+    hard to fake — their job *titles* or the *descriptions of what they did*.
+
+    Crucially this does NOT look at the self-written profile summary/headline,
+    since that's where buzzword-stuffers ("AI enthusiast | Building with LLMs")
+    plant unsupported claims.  Evidence must come from actual roles.
     """
-    title = (profile.get("current_title") or "").lower().strip()
-
-    # Only applies to clearly non-tech titles
-    if title not in NON_TECH_TITLES:
-        return False
-
-    # Count core AI skills
-    skill_names = {(s.get("name") or "").lower() for s in skills}
-    core_matches = len(skill_names & CORE_AI_SKILLS)
-
-    # Check career descriptions for any AI/ML work
-    ai_desc_keywords = {
-        "machine learning", "deep learning", "nlp", "embedding",
-        "model", "neural", "training", "inference", "ranking",
-        "retrieval", "recommendation", "pytorch", "tensorflow",
-    }
-    all_descs = " ".join(
-        (r.get("description") or "").lower() for r in career
-    )
-    has_ai_in_desc = any(kw in all_descs for kw in ai_desc_keywords)
-
-    # Non-tech title + lots of AI skills + no AI in descriptions = stuffer
-    if core_matches >= 3 and not has_ai_in_desc:
+    current_title = (profile.get("current_title") or "").lower()
+    titles = [current_title] + [(r.get("title") or "").lower() for r in career]
+    if any(any(frag in t for frag in _ML_TITLE_FRAGMENTS) for t in titles):
         return True
 
-    return False
+    descs = " ".join((r.get("description") or "").lower() for r in career)
+    return any(term in descs for term in _REAL_ML_TERMS)
+
+
+def _claims_ai_capability(profile: dict, skills: list) -> bool:
+    """
+    True if the profile *advertises* AI capability — either by listing several
+    core AI skills, or via an AI-buzzword headline/summary.
+    """
+    skill_names = {(s.get("name") or "").lower() for s in skills}
+    if len(skill_names & CORE_AI_SKILLS) >= 3:
+        return True
+
+    text = (
+        (profile.get("headline") or "") + " " + (profile.get("summary") or "")
+    ).lower()
+    buzz = (
+        "llm", "genai", "gen ai", "rag", "langchain", "vector database",
+        "vector db", "prompt engineering", "ai enthusiast", "building with",
+        "openai", "generative ai",
+    )
+    return sum(1 for b in buzz if b in text) >= 2
+
+
+def _is_keyword_stuffer(profile: dict, career: list, skills: list) -> bool:
+    """
+    Detect the trap the JD warns about: a profile that advertises AI/ML
+    capability (buzzword headline and/or a packed skills list) without any
+    real ML evidence in its actual job titles or role descriptions.
+
+    Title-agnostic by design — it catches Project/Program/Product Managers,
+    marketers, analysts, and other domain pivots who buzzword-stuff, not just
+    the handful of titles enumerated in NON_TECH_TITLES.  Genuine practitioners
+    always clear the evidence gate, so they're never penalised here.
+    """
+    if _has_real_ml_evidence(profile, career):
+        return False
+    return _claims_ai_capability(profile, skills)
 
 
 def _is_job_hopper(career: list) -> bool:
