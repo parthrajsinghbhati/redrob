@@ -9,17 +9,17 @@ An AI-powered candidate ranking system that goes beyond keyword matching to unde
     │
     ├── Stage 1:   Hard Filters          (structural disqualifiers)
     ├── Stage 1.5: Honeypot Detection    (concrete profile anomalies)
-    ├── Stage 2:   Semantic Scoring      (dense cosine vs JD — precomputed BGE embeddings)
+    ├── Stage 2:   Semantic Scoring      (hybrid: dense BGE cosine + lexical BM25)
     ├── Stage 3:   Rule-Based Scoring    (parallel — title, skills, career, education, location)
-    ├── Stage 4:   Behavioral Modifier   (platform engagement multiplier)
-    ├── Stage 5:   Score Combination     (0.30 semantic + 0.50 rule + 0.20 behavioral)
+    ├── Stage 4:   Behavioral Modifier   (platform engagement multiplier, 0.5×–1.2×)
+    ├── Stage 5:   Score Combination     (base = 0.375 semantic + 0.625 rule, × behavioral)
     ├── Stage 5.5: Cross-Encoder Re-rank (bge-reranker-base over the top-200 shortlist)
     └── Stage 6:   Top-100 + Reasoning   (rank-aware templates, real profile data)
 ```
 
 ## Key Design Decisions
 
-1. **Dense retrieval, precomputed offline.** Candidate profiles and the JD are encoded with `BAAI/bge-base-en-v1.5` (768-dim) once, offline (GPU-friendly, allowed to exceed the 5-min window). The ranking step only *loads* the vectors and does a CPU dot-product — so it needs no GPU and no network. This catches "plain-language" strong candidates who describe their work naturally without buzzwords.
+1. **Hybrid retrieval (dense + BM25), dense half precomputed offline.** Candidate profiles and the JD are encoded with `BAAI/bge-base-en-v1.5` (768-dim) once, offline (GPU-friendly, allowed to exceed the 5-min window). The ranking step only *loads* the vectors and does a CPU dot-product — so it needs no GPU and no network — catching "plain-language" strong candidates who describe their work naturally without buzzwords. At rank time this dense score is blended with a lexical **BM25-Okapi** score (`rank-bm25`, pure-CPU) at 70% dense / 30% BM25, so exact-term matches (specific tools, frameworks) still surface alongside semantic matches.
 
 2. **Cross-encoder re-ranking of a shortlist.** A bi-encoder is fast but coarse; a cross-encoder (`BAAI/bge-reranker-base`) is precise but expensive. We get both by re-ranking only the top-200 shortlist — precision where it matters (NDCG@10) while staying inside the CPU/5-min budget. It degrades gracefully (dense+rule order) if the weights aren't available locally.
 
@@ -29,7 +29,7 @@ An AI-powered candidate ranking system that goes beyond keyword matching to unde
 
 5. **Honeypot detection.** Flags only profiles with verifiable, concrete impossibilities (experience exceeding the career span, a role longer than the whole career, "expert" skills with zero usage, future dates) — high precision, so it never discards genuinely excellent candidates. Keyword-stuffer traps are handled separately as score penalties.
 
-6. **Behavioral signals as a multiplier.** Active, responsive candidates get a boost; inactive ones a moderate discount (floor 0.5×, ceiling 1.2×).
+6. **Behavioral signals as a true multiplier.** The semantic and rule scores form a weighted base in `[0, 1]`; the behavioral composite then *scales* that base (floor 0.5×, ceiling 1.2×) rather than adding a fixed amount. Active, responsive candidates get a genuine boost; inactive ones a real discount — with no artificial additive floor. The composite reads 13 signals (recruiter response, recency, open-to-work, interview completion, notice period, GitHub, verification, saved-by-recruiters, offer-acceptance rate, application activity, and network strength).
 
 ## Setup
 
@@ -105,5 +105,5 @@ redrob/
 
 ## Methodology (≤200 words)
 
-Multi-stage funnel with hybrid scoring. Stage 1 eliminates structurally unfit candidates (wrong experience band, pure non-tech careers). Stage 1.5 removes honeypots via high-precision concrete-anomaly detection (claimed experience exceeding the career span, a single role longer than the whole career, multiple "expert" skills with zero months used, future dates, assessment contradictions) — calibrated to catch the seeded impossibilities without discarding good candidates. Stage 2 computes dense semantic similarity using `bge-base-en-v1.5` embeddings precomputed offline — at rank time this is a pure CPU dot-product, catching "plain-language" strong candidates. Stage 3 runs parallel rule-based scoring: title/career trajectory (30pts), skill relevance with trust weighting (25pts), experience depth with production-keyword analysis (15pts), education (10pts), location fit (10pts), and career-pattern penalties (−10pts for consulting-only, keyword stuffers, job hoppers). Stage 4 applies a behavioral multiplier (0.5–1.2×) over response rate, recency, GitHub activity, notice period, and verification. Stage 5 combines 30% semantic + 50% rule + 20% behavioral. Stage 5.5 re-ranks the top-200 shortlist with a `bge-reranker-base` cross-encoder (blended 0.6/0.4 with the base score) for top-of-funnel precision, within the CPU budget. The skill trust multiplier is the core anti-stuffing mechanism: it cross-references proficiency claims against endorsements, usage duration, and assessment scores. Ranking runtime: a few minutes on CPU; embedding pre-computation is offline.
+Multi-stage funnel with hybrid scoring. Stage 1 eliminates structurally unfit candidates (wrong experience band, pure non-tech careers). Stage 1.5 removes honeypots via high-precision concrete-anomaly detection (claimed experience exceeding the career span, a single role longer than the whole career, multiple "expert" skills with zero months used, future dates, assessment contradictions) — calibrated to catch the seeded impossibilities without discarding good candidates. Stage 2 computes a hybrid retrieval score: dense semantic similarity from `bge-base-en-v1.5` embeddings (precomputed offline; a pure CPU dot-product at rank time, catching "plain-language" strong candidates) blended 70/30 with a lexical BM25-Okapi score so exact-term matches still surface. Stage 3 runs parallel rule-based scoring: title/career trajectory (30pts), skill relevance with trust weighting (25pts), experience depth with production-keyword analysis (15pts), education (10pts), location fit (10pts), and career-pattern penalties (−10pts for consulting-only, keyword stuffers, job hoppers). Stage 4 builds a behavioral composite from 13 signals (response rate, recency, GitHub, notice period, verification, offer-acceptance, application activity, network strength, …). Stage 5 forms a base score (≈0.375 semantic + 0.625 rule) and applies the behavioral value as a true multiplier (0.5–1.2×) rather than an additive term, so engagement genuinely scales the result. Stage 5.5 re-ranks the top-200 shortlist with a `bge-reranker-base` cross-encoder (blended 0.6/0.4 with the base score) for top-of-funnel precision, within the CPU budget. The skill trust multiplier is the core anti-stuffing mechanism: it cross-references proficiency claims against endorsements, usage duration, and assessment scores. Ranking runtime: a few minutes on CPU; embedding pre-computation is offline.
 ```

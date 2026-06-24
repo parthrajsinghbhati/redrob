@@ -6,7 +6,8 @@ Ranking pipeline that produces the top-100 CSV.
 Stages:
   1.   Hard Filters          – Eliminate structurally disqualified candidates
   1.5  Honeypot Detection    – Remove concretely impossible profiles
-  2.   Semantic Scoring      – Dense cosine vs JD (precomputed BGE embeddings)
+  2.   Semantic Scoring      – Hybrid retrieval: dense cosine (precomputed BGE
+                               embeddings) blended with lexical BM25 (Okapi)
   3.   Rule-Based Scoring    – Parallel per-candidate analysis (joblib)
   4.   Behavioral Modifier   – Platform engagement multiplier
   5.   Final Combination     – Weighted merge (0.30 sem + 0.50 rule + 0.20 beh)
@@ -40,6 +41,7 @@ from config import (
     CORE_AI_SKILLS,
     N_JOBS,
     JD_EMBEDDING_TEXT,
+    BM25_WEIGHT,
     RERANKER_MODEL,
     RERANK_SHORTLIST,
     RERANK_MAX_LENGTH,
@@ -134,6 +136,34 @@ def build_semantic_index(data_dir: str = "data") -> dict[str, float]:
         emb.shape[0], emb.shape[1], lo, hi,
     )
     return dict(zip(ids.tolist(), sims_norm.tolist()))
+
+
+# ============================================================================
+# Stage 2b: Lexical BM25 (Okapi) — the lexical half of hybrid retrieval
+# ============================================================================
+
+def build_bm25_scores(survivors: list[dict], jd_text: str) -> list[float] | None:
+    """
+    Score survivors against the JD with BM25-Okapi (pure-CPU, no GPU/network).
+
+    Returns a list of min-max normalised scores aligned with `survivors`, or
+    None if `rank_bm25` is unavailable — in which case the caller keeps the
+    dense-only semantic scores.
+    """
+    try:
+        from rank_bm25 import BM25Okapi
+    except Exception as e:  # noqa: BLE001
+        logger.warning("rank_bm25 import failed (%s) — using dense-only semantic", e)
+        return None
+
+    tokenized_corpus = [build_candidate_text(c).lower().split() for c in survivors]
+    bm25 = BM25Okapi(tokenized_corpus)
+    scores = bm25.get_scores(jd_text.lower().split())
+
+    lo, hi = float(scores.min()), float(scores.max())
+    if hi > lo:
+        return ((scores - lo) / (hi - lo)).tolist()
+    return [0.5] * len(survivors)
 
 
 # ============================================================================
@@ -248,7 +278,23 @@ def main():
     # ==================================================================
     logger.info("Stage 2: Assigning semantic scores to survivors ...")
     for c in survivors:
-        c["_semantic"] = semantic_index.get(c["candidate_id"], 0.0)
+        c["_dense"] = semantic_index.get(c["candidate_id"], 0.0)
+        c["_semantic"] = c["_dense"]
+
+    # ==================================================================
+    # Stage 2b: Lexical BM25, blended into the semantic signal (hybrid)
+    # ==================================================================
+    logger.info("Stage 2b: BM25 lexical scoring (hybrid retrieval) ...")
+    t_bm = time.time()
+    bm25_scores = build_bm25_scores(survivors, JD_EMBEDDING_TEXT)
+    if bm25_scores is not None:
+        for c, bm in zip(survivors, bm25_scores):
+            c["_bm25"] = bm
+            c["_semantic"] = (1 - BM25_WEIGHT) * c["_dense"] + BM25_WEIGHT * bm
+        logger.info(
+            "  BM25 done in %.1fs — blended %.0f%% dense / %.0f%% BM25",
+            time.time() - t_bm, (1 - BM25_WEIGHT) * 100, BM25_WEIGHT * 100,
+        )
 
     # ==================================================================
     # Stage 3: Rule-Based Scoring  (parallel via joblib)

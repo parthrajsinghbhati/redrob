@@ -10,7 +10,11 @@ and default values live here. Nothing is hardcoded elsewhere.
 # ============================================================================
 SEMANTIC_WEIGHT = 0.30    # Captures plain-language strong candidates
 RULE_BASED_WEIGHT = 0.50  # Enforces JD's explicit requirements
-BEHAVIORAL_WEIGHT = 0.20  # Platform engagement & reachability modifier
+BEHAVIORAL_WEIGHT = 0.20  # Platform engagement & reachability modifier (legacy/additive ref)
+
+# Stage 2 hybrid retrieval: dense (BGE cosine) blended with lexical (BM25).
+# semantic = (1 - BM25_WEIGHT) * dense + BM25_WEIGHT * bm25
+BM25_WEIGHT = 0.30
 
 # ============================================================================
 # Behavioral Signal Multiplier
@@ -21,16 +25,19 @@ BEHAVIORAL_RANGE = BEHAVIORAL_CEILING - BEHAVIORAL_FLOOR  # 0.7
 
 # Individual signal weights within the behavioral composite (sum → 1.0)
 BEHAVIORAL_SIGNAL_WEIGHTS = {
-    "recruiter_response_rate":   0.20,
-    "avg_response_time":         0.10,
-    "last_active_recency":       0.15,
-    "open_to_work":              0.10,
-    "profile_completeness":      0.05,
-    "interview_completion_rate": 0.10,
-    "notice_period":             0.10,
-    "github_activity":           0.10,
-    "verification":              0.05,
-    "saved_by_recruiters":       0.05,
+    "recruiter_response_rate":   0.17,
+    "avg_response_time":         0.08,
+    "last_active_recency":       0.13,
+    "open_to_work":              0.08,
+    "profile_completeness":      0.04,
+    "interview_completion_rate": 0.09,
+    "notice_period":             0.08,
+    "github_activity":           0.08,
+    "verification":              0.04,
+    "saved_by_recruiters":       0.04,
+    "offer_acceptance_rate":     0.08,
+    "applications_activity":     0.05,   # applications_submitted_30d + search_appearance_30d
+    "network_strength":          0.04,   # connection_count, log-scaled
 }
 
 # ============================================================================
@@ -97,8 +104,6 @@ CORE_AI_SKILLS = {
     "ranking", "ranking systems", "recommendation systems",
     "recommendations", "search ranking", "learning to rank",
     "learning-to-rank",
-    # Python
-    "python",
     # Evaluation
     "ndcg", "mrr", "a/b testing", "evaluation",
     "evaluation frameworks", "offline evaluation",
@@ -127,6 +132,7 @@ NICE_TO_HAVE_SKILLS = {
     "object detection", "image classification", "computer vision",
     "gans", "generative ai", "tts", "speech recognition", "asr",
     # General engineering
+    "python",
     "sql", "data analysis", "data science",
     "flask", "fastapi", "django",
     "git", "ci/cd", "mlops",
@@ -196,6 +202,16 @@ CONSULTING_FIRMS = {
     "ltimindtree", "lti", "mindtree", "hexaware",
     "deloitte", "ey", "ernst & young", "kpmg", "pwc",
     "pricewaterhousecoopers",
+    # Additional large IT-services / BPO / consulting firms
+    "genpact", "ibm", "ibm india", "oracle", "oracle india",
+    "sapient", "publicis sapient", "syntel", "atos syntel",
+    "zensar", "zensar technologies",
+    "l&t technology services", "ltts",
+    "persistent systems", "persistent",
+    "niit technologies",
+    "dxc technology", "dxc",
+    "unisys", "ntt data", "ntt",
+    "igate", "patni", "mastech",
 }
 
 # ============================================================================
@@ -215,6 +231,12 @@ INDIA_COUNTRY = "india"
 # ============================================================================
 IDEAL_NOTICE_DAYS = 30
 MAX_ACCEPTABLE_NOTICE_DAYS = 90
+
+# ============================================================================
+# Salary Fit  (Series A AI-native startup; Senior AI Engineer ≈ ₹30–60 LPA)
+# ============================================================================
+SALARY_SLIGHTLY_ABOVE_LPA = 60   # min expectation above this → small penalty
+SALARY_OUT_OF_BUDGET_LPA = 80    # min expectation above this → moderate penalty
 
 # ============================================================================
 # Default Values for Missing / Null Fields

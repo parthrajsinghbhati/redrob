@@ -27,6 +27,8 @@ from config import (
     IDEAL_EXPERIENCE_MAX,
     IDEAL_NOTICE_DAYS,
     MAX_ACCEPTABLE_NOTICE_DAYS,
+    SALARY_SLIGHTLY_ABOVE_LPA,
+    SALARY_OUT_OF_BUDGET_LPA,
     TITLE_CAREER_MAX_PTS,
     SKILL_RELEVANCE_MAX_PTS,
     EXPERIENCE_DEPTH_MAX_PTS,
@@ -83,14 +85,32 @@ def _score_title_career(candidate: dict) -> float:
     current_title = (profile.get("current_title") or "").lower().strip()
     pts += _lookup_title_score(current_title)
 
-    # --- Product-company experience (0-10 pts) ---
+    # --- Product / ML-role experience (0-10 pts) ---
+    # Role-based, not just employer-based: genuine ML/AI production work at a
+    # consulting firm still earns partial credit (Issue 5).
+    ml_role_signals = {
+        "machine learning", "deep learning", "nlp", "embedding",
+        "model", "ranking", "retrieval", "recommendation", "pytorch",
+        "tensorflow", "pipeline", "deployed", "production",
+    }
     has_product_exp = False
-    product_months = 0
+    product_months = 0.0
     for role in career:
         company = (role.get("company") or "").lower().strip()
-        if company not in CONSULTING_FIRMS:
+        desc = (role.get("description") or "").lower()
+        title = (role.get("title") or "").lower()
+        duration = role.get("duration_months", 0) or 0
+
+        is_consulting = company in CONSULTING_FIRMS
+        role_is_ml = any(kw in desc or kw in title for kw in ml_role_signals)
+
+        if not is_consulting:
             has_product_exp = True
-            product_months += role.get("duration_months", 0)
+            product_months += duration
+        elif role_is_ml:
+            # Consulting firm but genuine ML work — give 50% credit
+            has_product_exp = True
+            product_months += duration * 0.5
 
     if has_product_exp:
         # Scale: 12 months product exp = 3 pts, 48+ months = 10 pts
@@ -384,6 +404,15 @@ def _score_location(candidate: dict) -> float:
     elif notice_days <= MAX_ACCEPTABLE_NOTICE_DAYS:
         pts += 1.0
     # else: 0
+
+    # --- Salary fit (penalty for out-of-budget expectations) ---
+    # Series A AI-native startup; Senior AI Engineer ≈ ₹30–60 LPA.
+    salary = signals.get("expected_salary_range_inr_lpa") or {}
+    sal_min = salary.get("min", 0) or 0
+    if sal_min > SALARY_OUT_OF_BUDGET_LPA:
+        pts -= 2.0   # clearly out of budget
+    elif sal_min > SALARY_SLIGHTLY_ABOVE_LPA:
+        pts -= 0.5   # slightly above range
 
     return clamp(pts, 0, LOCATION_MAX_PTS)
 

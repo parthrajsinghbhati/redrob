@@ -10,9 +10,7 @@ import math
 from config import (
     SEMANTIC_WEIGHT,
     RULE_BASED_WEIGHT,
-    BEHAVIORAL_WEIGHT,
     BEHAVIORAL_FLOOR,
-    BEHAVIORAL_CEILING,
     BEHAVIORAL_RANGE,
     BEHAVIORAL_SIGNAL_WEIGHTS,
     RULE_BASED_TOTAL_MAX,
@@ -33,7 +31,7 @@ def compute_behavioral_multiplier(candidate: dict) -> float:
     """
     Compute the behavioral-signal multiplier for a candidate.
 
-    Each of the 23 signals is normalised to [0, 1], weighted, summed,
+    Each of the 13 signals is normalised to [0, 1], weighted, summed,
     then mapped into the [BEHAVIORAL_FLOOR, BEHAVIORAL_CEILING] range.
     """
     signals = candidate.get("redrob_signals") or {}
@@ -101,6 +99,24 @@ def compute_behavioral_multiplier(candidate: dict) -> float:
     saved_norm = min(1.0, math.log1p(saved) / math.log1p(20))
     composite += weights["saved_by_recruiters"] * saved_norm
 
+    # 11. Offer acceptance rate (0-1, higher = more serious / closeable candidate)
+    oar = _s(signals, "offer_acceptance_rate", 0.5)
+    composite += weights.get("offer_acceptance_rate", 0) * clamp(oar, 0, 1)
+
+    # 12. Applications activity (submitted + recruiter-search appearances ⇒ actively looking)
+    apps = _s(signals, "applications_submitted_30d", 0)
+    searches = _s(signals, "search_appearance_30d", 0)
+    activity_norm = min(
+        1.0,
+        (math.log1p(apps) / math.log1p(10) + math.log1p(searches) / math.log1p(100)) / 2,
+    )
+    composite += weights.get("applications_activity", 0) * activity_norm
+
+    # 13. Network strength (log-scaled professional connection count)
+    connections = _s(signals, "connection_count", 0)
+    network_norm = min(1.0, math.log1p(connections) / math.log1p(500))
+    composite += weights.get("network_strength", 0) * network_norm
+
     # Map weighted sum [0, 1] → [BEHAVIORAL_FLOOR, BEHAVIORAL_CEILING]
     return BEHAVIORAL_FLOOR + BEHAVIORAL_RANGE * clamp(composite, 0, 1)
 
@@ -123,18 +139,23 @@ def compute_final_score(
     """
     Combine the three scoring dimensions into one final score.
 
+    The behavioral value is a TRUE multiplier (Issue 4 / Option A): the
+    semantic and rule-based scores form a weighted base in [0, 1], and the
+    behavioral multiplier (0.5–1.2) scales that base up or down. An inactive
+    candidate therefore loses points (0.5× base) rather than receiving a free
+    additive floor, while a highly-engaged one is boosted (up to 1.2× base).
+
     - semantic_score:         [0, 1]  cosine similarity
     - rule_score:             [0, 100]  raw rule-based points
     - behavioral_multiplier:  [0.5, 1.2]
     """
     sem_norm = clamp(semantic_score, 0, 1)
     rule_norm = clamp(rule_score / RULE_BASED_TOTAL_MAX, 0, 1)
-    beh_norm = clamp(
-        behavioral_multiplier / BEHAVIORAL_CEILING, 0, 1
+
+    weight_sum = SEMANTIC_WEIGHT + RULE_BASED_WEIGHT
+    base = (
+        (SEMANTIC_WEIGHT / weight_sum) * sem_norm
+        + (RULE_BASED_WEIGHT / weight_sum) * rule_norm
     )
 
-    return (
-        SEMANTIC_WEIGHT * sem_norm
-        + RULE_BASED_WEIGHT * rule_norm
-        + BEHAVIORAL_WEIGHT * beh_norm
-    )
+    return clamp(behavioral_multiplier * base, 0, 1)

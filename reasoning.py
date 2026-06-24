@@ -11,8 +11,6 @@ Requirements:
   • Tone must match the rank position
 """
 
-import random
-
 from config import (
     CORE_AI_SKILLS,
     NICE_TO_HAVE_SKILLS,
