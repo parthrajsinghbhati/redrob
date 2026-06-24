@@ -27,7 +27,7 @@ An AI-powered candidate ranking system that goes beyond keyword matching to unde
 
 4. **Career trajectory analysis.** Detects consulting-only careers, claim-vs-evidence mismatches, and job-hopping patterns. Genuine product/ML role experience is weighted heavily — including partial credit for real ML work done at consulting firms.
 
-5. **Honeypot detection.** Flags only profiles with verifiable, concrete impossibilities (experience exceeding the career span, a role longer than the whole career, "expert" skills with zero usage, future dates) — high precision, so it never discards genuinely excellent candidates. Keyword-stuffer traps are handled separately as score penalties.
+5. **Honeypot detection.** Flags only profiles with verifiable, concrete impossibilities (experience exceeding the career span, a single role longer than total experience, multiple "expert" skills with zero usage, future dates, assessment-vs-proficiency contradictions) — high precision, so it never discards genuinely excellent candidates. Keyword-stuffer traps are handled separately as score penalties.
 
 6. **Behavioral signals as a true multiplier.** The semantic and rule scores form a weighted base in `[0, 1]`; the behavioral composite then *scales* that base (floor 0.5×, ceiling 1.2×) rather than adding a fixed amount. Active, responsive candidates get a genuine boost; inactive ones a real discount — with no artificial additive floor. The composite reads 13 signals (recruiter response, recency, open-to-work, interview completion, notice period, GitHub, verification, saved-by-recruiters, offer-acceptance rate, application activity, and network strength).
 
@@ -38,6 +38,16 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+### Candidate data (`candidates.jsonl`)
+
+The 100K candidate pool is **not committed to this repo** (it is ~hundreds of MB and listed in `.gitignore`). Before reproducing the full submission, copy the file from your hackathon bundle into:
+
+```
+India_runs_data_and_ai_challenge/candidates.jsonl
+```
+
+The repo does include the smaller challenge files (`validate_submission.py`, `sample_candidates.json`, specs, schema, etc.). For a quick sanity check without the full dataset, use `sample_candidates.json` via the [sandbox notebook](sandbox.ipynb).
 
 ## Reproduce the Submission
 
@@ -56,21 +66,26 @@ This writes `data/embeddings.npz` and `data/jd_embedding.npy`. (These artifacts 
 not committed because of their size; regenerate them with the command above.)
 
 The cross-encoder weights (`BAAI/bge-reranker-base`, ~1.1 GB) download automatically
-on the first `rank.py` run and are then cached locally for offline re-runs.
+on the first `rank.py` run and are then cached locally. After that, ranking needs
+no network.
 
-### Step 2: Run the ranking pipeline (CPU, no network, < 5 min)
+### Step 2: Run the ranking pipeline (CPU, < 5 min)
 
 ```bash
 python rank.py \
     --candidates ./India_runs_data_and_ai_challenge/candidates.jsonl \
     --out ./submission.csv
-# Add --no-rerank to skip the cross-encoder stage.
+# Add --no-rerank to skip the cross-encoder stage (strict no-network path).
 ```
+
+Rename or copy the output to your registered participant ID before uploading
+(e.g. `venv.csv` for team **venv**).
 
 ### Step 3: Validate the output
 
 ```bash
 python India_runs_data_and_ai_challenge/validate_submission.py ./submission.csv
+# Or: validate_submission.py ./venv.csv
 ```
 
 ## Project Structure
@@ -87,21 +102,25 @@ redrob/
 ├── reasoning.py                # Reasoning text generation (rank-aware templates)
 ├── requirements.txt            # Python dependencies
 ├── submission_metadata.yaml    # Portal metadata mirror
+├── sandbox.ipynb               # Colab sandbox (small-sample reproducibility)
+├── venv.csv                    # Final submission CSV (participant id: venv)
 ├── data/
 │   ├── embeddings.npz          # Pre-computed candidate embeddings (regenerate)
 │   └── jd_embedding.npy        # Pre-computed JD embedding (regenerate)
 └── India_runs_data_and_ai_challenge/
-    ├── candidates.jsonl         # 100K candidate pool
-    └── ...                      # Other challenge files
+    ├── candidates.jsonl         # 100K pool — NOT in git; copy from hackathon bundle
+    ├── sample_candidates.json   # 50-row format demo (used by sandbox.ipynb)
+    ├── validate_submission.py
+    └── ...                      # Specs, schema, job description, etc.
 ```
 
 ## Compute Environment
 
 - **Platform**: macOS (Apple Silicon)
 - **RAM**: 16 GB
-- **Python**: 3.11+
+- **Python**: 3.13 (3.11+ should work)
 - **GPU**: Used only for *offline* embedding pre-computation (free Colab T4). Ranking is CPU-only.
-- **Network**: Not used during ranking (embeddings precomputed; cross-encoder weights cached).
+- **Network**: Required once to cache cross-encoder weights on first `rank.py` run; not needed after embeddings and reranker are cached locally (use `--no-rerank` for a fully offline path).
 
 ## Methodology (≤200 words)
 
@@ -111,7 +130,7 @@ Multi-stage funnel built to surface **genuine AI engineers** over keyword matche
 Drop structurally unfit profiles: wrong experience band, pure non-tech careers without ML skills.
 
 **2 — Honeypot detection**  
-Remove concrete impossibilities only — experience exceeding career span, expert skills with zero usage, future dates. Keyword-stuffer traps are penalised later, not filtered here.
+Remove concrete impossibilities only — experience exceeding career span, expert skills with zero usage, future dates, assessment contradictions. Keyword-stuffer traps are penalised later, not filtered here.
 
 **3 — Hybrid retrieval**  
 `bge-base-en-v1.5` dense cosine (offline precompute, CPU dot-product) blended **70 / 30** with BM25-Okapi.
@@ -126,6 +145,9 @@ Title/career (30) · trust-weighted skills (25) · experience (15) · education 
 `base = 0.375 × semantic + 0.625 × rule` → `final = behavioral × base`.
 
 **7 — Cross-encoder re-rank**  
-`bge-reranker-base` over the top-200 shortlist, blended **60 / 40** with the base score for top-of-funnel precision.
+`bge-reranker-base` over the top-200 shortlist, blended **60 / 40** with the base score.
 
-**Compute:** ranking is CPU-only, no network, ~1 min. Embedding pre-computation is offline (GPU-friendly).
+**8 — Output**  
+Top-100 from reranked shortlist; scores mapped 0.10–0.99 (strictly decreasing); rank-aware reasoning.
+
+**Compute:** ranking is CPU-only, ~1 min after models are cached. Embedding pre-computation is offline (GPU-friendly).
