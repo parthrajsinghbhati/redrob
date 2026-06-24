@@ -105,5 +105,27 @@ redrob/
 
 ## Methodology (≤200 words)
 
-Multi-stage funnel with hybrid scoring. Stage 1 eliminates structurally unfit candidates (wrong experience band, pure non-tech careers). Stage 1.5 removes honeypots via high-precision concrete-anomaly detection (claimed experience exceeding the career span, a single role longer than the whole career, multiple "expert" skills with zero months used, future dates, assessment contradictions) — calibrated to catch the seeded impossibilities without discarding good candidates. Stage 2 computes a hybrid retrieval score: dense semantic similarity from `bge-base-en-v1.5` embeddings (precomputed offline; a pure CPU dot-product at rank time, catching "plain-language" strong candidates) blended 70/30 with a lexical BM25-Okapi score so exact-term matches still surface. Stage 3 runs parallel rule-based scoring: title/career trajectory (30pts), skill relevance with trust weighting (25pts), experience depth with production-keyword analysis (15pts), education (10pts), location fit (10pts), and career-pattern penalties (−10pts for consulting-only, keyword stuffers, job hoppers). Stage 4 builds a behavioral composite from 13 signals (response rate, recency, GitHub, notice period, verification, offer-acceptance, application activity, network strength, …). Stage 5 forms a base score (≈0.375 semantic + 0.625 rule) and applies the behavioral value as a true multiplier (0.5–1.2×) rather than an additive term, so engagement genuinely scales the result. Stage 5.5 re-ranks the top-200 shortlist with a `bge-reranker-base` cross-encoder (blended 0.6/0.4 with the base score) for top-of-funnel precision, within the CPU budget. The skill trust multiplier is the core anti-stuffing mechanism: it cross-references proficiency claims against endorsements, usage duration, and assessment scores. Ranking runtime: a few minutes on CPU; embedding pre-computation is offline.
-```
+Multi-stage funnel built to surface **genuine AI engineers** over keyword matchers.
+
+**1 — Hard filters**  
+Drop structurally unfit profiles: wrong experience band, pure non-tech careers without ML skills.
+
+**2 — Honeypot detection**  
+Remove concrete impossibilities only — experience exceeding career span, expert skills with zero usage, future dates. Keyword-stuffer traps are penalised later, not filtered here.
+
+**3 — Hybrid retrieval**  
+`bge-base-en-v1.5` dense cosine (offline precompute, CPU dot-product) blended **70 / 30** with BM25-Okapi.
+
+**4 — Rule-based scoring** *(parallel)*  
+Title/career (30) · trust-weighted skills (25) · experience (15) · education (10) · location (10) · penalties (−10). Evidence-gated penalty catches AI claims without ML work in actual roles.
+
+**5 — Behavioral modifier**  
+13 signals → multiplier **0.5×–1.2×** (response, recency, GitHub, offer-acceptance, network, etc.).
+
+**6 — Score combination**  
+`base = 0.375 × semantic + 0.625 × rule` → `final = behavioral × base`.
+
+**7 — Cross-encoder re-rank**  
+`bge-reranker-base` over the top-200 shortlist, blended **60 / 40** with the base score for top-of-funnel precision.
+
+**Compute:** ranking is CPU-only, no network, ~1 min. Embedding pre-computation is offline (GPU-friendly).
