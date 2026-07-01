@@ -1,5 +1,7 @@
 # Redrob AI — Intelligent Candidate Discovery & Ranking
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/parthrajsinghbhati/redrob/blob/main/sandbox.ipynb)
+
 An AI-powered candidate ranking system that goes beyond keyword matching to understand who genuinely fits a role. Built for the Redrob Hackathon (India Runs Data & AI Challenge).
 
 ## Architecture
@@ -33,25 +35,43 @@ An AI-powered candidate ranking system that goes beyond keyword matching to unde
 
 ## Setup
 
+### Git LFS Requirement
+
+This repository uses **Git Large File Storage (LFS)** to track the 100K candidate dataset (`candidates.jsonl` ~487MB) and precomputed dense embeddings (`embeddings.npz` ~180MB).
+
+- **If you have Git LFS installed:**
+  Cloning this repository will automatically download all required large data files.
+  
+- **If you do not have Git LFS installed:**
+  1. Cloning will only fetch small Git LFS "pointer" text files (a few bytes each).
+  2. Install Git LFS:
+     - **macOS**: `brew install git-lfs`
+     - **Linux (Debian/Ubuntu)**: `sudo apt-get install git-lfs`
+     - **Windows**: Download from [git-lfs.github.com](https://git-lfs.github.com/)
+  3. Initialize LFS and pull the actual datasets:
+     ```bash
+     git lfs install
+     git lfs pull
+     ```
+  4. *Alternative fallback:* If you prefer not to use Git LFS, manually copy `candidates.jsonl` from your hackathon bundle into `India_runs_data_and_ai_challenge/candidates.jsonl` and run the precomputation script (Step 1 below).
+
+### Local Environment Setup
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Candidate data (`candidates.jsonl`)
-
-The 100K candidate pool is **not committed to this repo** (it is ~hundreds of MB and listed in `.gitignore`). Before reproducing the full submission, copy the file from your hackathon bundle into:
-
-```
-India_runs_data_and_ai_challenge/candidates.jsonl
-```
-
-The repo does include the smaller challenge files (`validate_submission.py`, `sample_candidates.json`, specs, schema, etc.). For a quick sanity check without the full dataset, use `sample_candidates.json` via the [sandbox notebook](sandbox.ipynb).
+To run a quick sanity check end-to-end on the real dataset, open the [sandbox notebook](sandbox.ipynb) in Google Colab:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/parthrajsinghbhati/redrob/blob/main/sandbox.ipynb)
 
 ## Reproduce the Submission
 
-### Step 1: Pre-compute embeddings (offline, once)
+### Step 1: Pre-compute embeddings (offline, optional)
+
+> [!NOTE]
+> This step is **optional** because the precomputed dense embeddings (`data/embeddings.npz` and `data/jd_embedding.npy`) are already tracked and downloaded via Git LFS. You only need to run this if you want to regenerate them (e.g., using a different model or parameters).
 
 Runs on CPU (~15-30 min) or any GPU (a free Google Colab T4 does it in ~2-8 min):
 
@@ -62,8 +82,7 @@ python precompute_embeddings.py \
 # On a GPU, add: --fp16 --batch-size 384
 ```
 
-This writes `data/embeddings.npz` and `data/jd_embedding.npy`. (These artifacts are
-not committed because of their size; regenerate them with the command above.)
+This writes `data/embeddings.npz` and `data/jd_embedding.npy`. (These artifacts are tracked via Git LFS and downloaded automatically during setup, but can be regenerated if needed.)
 
 The cross-encoder weights (`BAAI/bge-reranker-base`, ~1.1 GB) download automatically
 on the first `rank.py` run and are then cached locally. After that, ranking needs
@@ -102,14 +121,14 @@ redrob/
 ├── reasoning.py                # Reasoning text generation (rank-aware templates)
 ├── requirements.txt            # Python dependencies
 ├── submission_metadata.yaml    # Portal metadata mirror
-├── sandbox.ipynb               # Colab sandbox (small-sample reproducibility)
+├── sandbox.ipynb               # Colab sandbox (end-to-end reproducibility on the real dataset)
 ├── venv.csv                    # Final submission CSV (participant id: venv)
 ├── data/
-│   ├── embeddings.npz          # Pre-computed candidate embeddings (regenerate)
-│   └── jd_embedding.npy        # Pre-computed JD embedding (regenerate)
+│   ├── embeddings.npz          # Pre-computed candidate embeddings (tracked via Git LFS)
+│   └── jd_embedding.npy        # Pre-computed JD embedding (tracked via Git LFS)
 └── India_runs_data_and_ai_challenge/
-    ├── candidates.jsonl         # 100K pool — NOT in git; copy from hackathon bundle
-    ├── sample_candidates.json   # 50-row format demo (used by sandbox.ipynb)
+    ├── candidates.jsonl         # 100K pool (tracked via Git LFS)
+    ├── sample_candidates.json   # 50-row format demo
     ├── validate_submission.py
     └── ...                      # Specs, schema, job description, etc.
 ```
